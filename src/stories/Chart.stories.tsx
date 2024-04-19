@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import ChartC, { ChartProps } from '../Components/Chart/Chart';
+import Chart, { ChartProps } from '../Components/Chart/Chart';
 
 const meta = {
-    title: 'Example/ChartC',
-    component: ChartC,
+    title: 'Example/Chart',
+    component: Chart,
     tags: ['autodocs'],
 } as Meta
 
