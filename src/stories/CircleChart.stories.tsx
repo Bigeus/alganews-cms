@@ -22,7 +22,6 @@ type Story = StoryObj<CircleChartProps>;
 
 export const Default: Story = {
     args: {
-        progress: 80,
         size: 150,
     }
 }
