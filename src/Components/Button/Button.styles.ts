@@ -11,7 +11,7 @@ const THEME = {
     danger: {
         bg: '#F84735',
         color: '#FFFFFF',
-        onHover: `box-shadow: 0 3px 6px rgba(0,0,0,.3);`,
+        onHover: `box-shadow: 0 3px 6px rgba(0,0,0,.2);`,
         disabled: {
             color: COLORS.red,
             bg: transparentize(0.75, COLORS.red)
@@ -21,7 +21,7 @@ const THEME = {
     primary: {
         bg: '#0099FF',
         color: '#FFFFFF',
-        onHover: `box-shadow: 0 3px 6px rgba(0,0,0,.3);`,
+        onHover: `box-shadow: 0 3px 6px rgba(0,0,0,.2);`,
         disabled: {
             color: '#fff',
             bg: transparentize(0.44, COLORS.primary)
@@ -62,5 +62,9 @@ background-Color: ${p => THEME[p.variant].bg};
 
     pointer-events: none;
     border-color: transparent;
+}
+
+&:active{
+    box-shadow: none;
 }
 `
