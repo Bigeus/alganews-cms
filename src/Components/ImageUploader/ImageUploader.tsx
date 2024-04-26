@@ -46,11 +46,7 @@ export default function ImageUploader(props: ImageUploaderProps) {
 
     return <IU.Wrapper>
         <IU.Label>
-            <Icon
-                size={'24px'}
-                path={mdiUpload}
-            >
-            </Icon>
+            <Icon size={'24px'} path={mdiUpload} />
             <span>{props.label}</span>
             <IU.Input type='file' onChange={handleChange}>
 
