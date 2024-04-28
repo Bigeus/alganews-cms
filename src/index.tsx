@@ -1,7 +1,6 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
+import './Core/Imports.css';
 import reportWebVitals from './reportWebVitals';
 import {
   createBrowserRouter,
@@ -9,24 +8,26 @@ import {
   RouterProvider,
   useLoaderData,
 } from "react-router-dom";
-import { json } from 'stream/consumers';
 
-const Home = React.lazy(() => import('./Views/Home.view'));
-const UserView = React.lazy(() => import('./Views/User.view'));
-const CalcView = React.lazy(() => import('./Views/Calc.view'));
-const NavBar = React.lazy(() => import('./Components/NavBar'));
-const ContactView = React.lazy(() => import('./Views/Contact.view'));
+import NavBar from './Components/NavBar';
+import CalcView from './App/Views/Calc.view';
+import ContactView from './App/Views/Contact.view';
+import UserView from './App/Views/User.view';
+import HomeView from './App/Views/Home.view';
+import ErrorView from './App/Views/ErrorPage.view';
+import ErrorPage from './App/Views/ErrorPage.view';
 
 const ROUTES = createBrowserRouter([
   {
     path: "/",
     element: <NavBar />,
+    errorElement: <ErrorPage />,
     children: [
 
       {
         index: true,
         path: 'home',
-        element: <Home />,
+        element: <HomeView />,
 
       },
       {

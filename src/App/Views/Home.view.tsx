@@ -1,4 +1,4 @@
-import UsePageTitle from "../Hooks/UsePageTitle"
+import UsePageTitle from "../../Core/Hooks/UsePageTitle"
 
 
 export default function HomeView(){

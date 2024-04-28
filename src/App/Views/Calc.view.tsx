@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 import { useLocation, useParams } from "react-router-dom"
-import UsePageTitle from "../Hooks/UsePageTitle"
+import UsePageTitle from "../../Core/Hooks/UsePageTitle"
+
 
 function useQuery(){
     return new URLSearchParams(useLocation().search)
