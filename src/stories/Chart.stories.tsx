@@ -13,6 +13,6 @@ type Story = StoryObj<ChartProps>;
 
 export const Default: Story = {
     args: {
-
+        
     },
 };

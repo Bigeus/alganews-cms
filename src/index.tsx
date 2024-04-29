@@ -16,20 +16,14 @@ import UserView from './App/Views/User.view';
 import HomeView from './App/Views/Home.view';
 import ErrorView from './App/Views/ErrorPage.view';
 import ErrorPage from './App/Views/ErrorPage.view';
+import GlobalStyles from './Core/GlobalStyles';
 
 const ROUTES = createBrowserRouter([
   {
     path: "/",
-    element: <NavBar />,
+    element: <HomeView />,
     errorElement: <ErrorPage />,
     children: [
-
-      {
-        index: true,
-        path: 'home',
-        element: <HomeView />,
-
-      },
       {
         path: '/contact',
         element: <ContactView />
@@ -54,8 +48,8 @@ root.render(
   <React.StrictMode>
     <Suspense>
 
-    <RouterProvider router={ROUTES} />
-
+      <RouterProvider router={ROUTES} />
+      <GlobalStyles />
     </Suspense>
   </React.StrictMode>
 );

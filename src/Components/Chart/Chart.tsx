@@ -16,6 +16,9 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import * as C from 'chart.js';
+import styled from 'styled-components';
+import { transparentize } from 'polished';
+import Heading from '../Typography/Heading';
 
 ChartJS.register(
   CategoryScale,
@@ -28,11 +31,22 @@ ChartJS.register(
   Legend
 );
 
-export const options = {
+export const options: Chart.ChartOptions = {
   responsive: false,
-  maintainAspectRatio: false,
-  stacked: true,
+  maintainAspectRatio: true,
+  interaction: {
+    mode: 'index',
+    intersect: true,
+  },
+  stacked: false,
+  gridLines: {
+    display: false,
+  },
   plugins: {
+    title: {
+      display: true,
+      text: 'Título',
+    },
     legend: {
       display: true,
       position: 'bottom',
@@ -49,28 +63,32 @@ export const options = {
   },
 
   scales: {
-    y: {
+    //@ts-ignore
+    y1: {
       id: 'cashFlow',
-      type: 'linear' as const,
+      type: 'linear',
       display: true,
       Chart: {
         display: false,
       },
-      position: 'left' as const,
-    },
-    y1: {
-      type: 'linear' as const,
-      display: false,
+      position: "left",
       gridLines: {
         display: false,
       },
-      position: 'right' as const,
-      grid: {
-        drawOnChartArea: false,
-      },
     },
+    /*   y1: {
+        type: 'linear',
+        display: false,
+        gridLines: {
+          display: false,
+        },
+        position: 'right' as const,
+        grid: {
+          drawOnChartArea: false,
+        },
+      }, */
   },
-};
+}
 
 
 const labels = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'July'];
@@ -90,7 +108,6 @@ export const data = {
     },
     {
       label: 'Despesas',
-      drawActiveElementsOnTop: true,
       data: [100, 200, 250, 500, 1000, 600, 300],
       fill: true,
       backgroundColor: '#274060',
@@ -101,9 +118,22 @@ export const data = {
   ],
 };
 
-export interface ChartProps { }
+export interface ChartProps { data: Chart.ChartData, title: string }
 
-export default function Chart() {
+export default function Chart({ data, title }: ChartProps) {
   //@ts-ignore
-  return <Line options={options} data={data} height={250} width={500} />;
+  return <ChartWrapper>
+    <div style={{ marginBottom: 16 }}>
+      <Heading level={3}>
+        {title}
+      </Heading>
+    </div>
+    {/* @ts-ignore */}
+    <Line options={options} data={data} height={250} width={500} title='teste' />
+  </ChartWrapper>
 }
+const ChartWrapper = styled.div`
+  text-align: center;
+  border: 1px solid ${transparentize(0.9, '#274060')};
+  padding: 20px;
+`
