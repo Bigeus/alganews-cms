@@ -2,7 +2,6 @@ import { mdiOpenInNew } from "@mdi/js"
 import Icon from "@mdi/react"
 import { useMemo } from "react"
 import { Column, useTable } from "react-table"
-import { borderColor, borderWidth } from "polished"
 import Table from "../../Components/Table/Table"
 
 type Post = {

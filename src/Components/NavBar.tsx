@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom"
 import { NavLink } from "react-router-dom"
 import { Outlet, } from "react-router-dom"
 import styled from "styled-components"
@@ -7,7 +6,8 @@ export default function NavBar() {
     return <nav>
         <List>
             <Item><NavLink to={'/'} >HOME</NavLink></Item>
-            <Item><NavLink to={'/contact'} >CONTACT</NavLink></Item>
+            <Item><NavLink to={'/editores'} >EDITORES</NavLink></Item>
+            <Item><NavLink to={'/posts/criar'} >NOVO POST</NavLink></Item>
         </List>
         <Outlet />
     </nav>

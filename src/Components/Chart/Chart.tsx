@@ -64,7 +64,7 @@ export const options: Chart.ChartOptions = {
 
   scales: {
     //@ts-ignore
-    y1: {
+    y: {
       id: 'cashFlow',
       type: 'linear',
       display: true,

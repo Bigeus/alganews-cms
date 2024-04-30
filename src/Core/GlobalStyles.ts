@@ -1,3 +1,4 @@
+import { transparentize } from "polished";
 import { createGlobalStyle } from "styled-components";
 
 export default createGlobalStyle`
@@ -13,4 +14,14 @@ export default createGlobalStyle`
         background-color: #F3F8FA;
         color: #274060; 
     }
-`
+
+    .confirmOverlay{
+            background-color: ${transparentize(0.2, '#274060')};
+    }
+    
+        .confirmOverlay{
+            background-color: ${transparentize(0.2, '#F3F8FA')};
+    }
+
+
+    `

@@ -4,40 +4,30 @@ import './Core/Imports.css';
 import reportWebVitals from './reportWebVitals';
 import {
   createBrowserRouter,
-  LoaderFunction,
   RouterProvider,
-  useLoaderData,
 } from "react-router-dom";
 
-import NavBar from './Components/NavBar';
-import CalcView from './App/Views/Calc.view';
-import ContactView from './App/Views/Contact.view';
-import UserView from './App/Views/User.view';
 import HomeView from './App/Views/Home.view';
-import ErrorView from './App/Views/ErrorPage.view';
-import ErrorPage from './App/Views/ErrorPage.view';
 import GlobalStyles from './Core/GlobalStyles';
+import EditorsListView from './App/Views/EditorsList.view';
+import PostCreateView from './App/Views/PostCreate.view';
+import NotFound404View from './App/Views/NotFound404.view';
 
 const ROUTES = createBrowserRouter([
   {
     path: "/",
     element: <HomeView />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        path: '/contact',
-        element: <ContactView />
-      },
-      {
-        path: '/user/:userId',
-        element: <UserView />
-      },
-      {
-        path: '/calc/:a/:b',
-        element: <CalcView />
-      }
-    ]
-  }]);
+    errorElement: <NotFound404View />,
+  },
+  {
+    path: '/editores',
+    element: <EditorsListView />
+  },
+  {
+    path: '/posts/criar',
+    element: <PostCreateView />
+  },
+]);
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
