@@ -13,24 +13,8 @@ type Story = StoryObj<ProgressBarProps>;
 
 export const Default: Story = {
     args: {
-  
-    }
-}
-
-export const Default2: Story = {
-    args: {
-  
-    }
-}
-
-export const Default3: Story = {
-    args: {
-  
-    }
-}
-
-export const Default4: Story = {
-    args: {
-  
+        progress: 50,
+        theme: 'primary',
+        title: 'Título Teste Teste Teste Teste',
     }
 }

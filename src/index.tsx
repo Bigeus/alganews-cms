@@ -12,6 +12,7 @@ import GlobalStyles from './Core/GlobalStyles';
 import EditorsListView from './App/Views/EditorsList.view';
 import PostCreateView from './App/Views/PostCreate.view';
 import NotFound404View from './App/Views/NotFound404.view';
+import EditorProfileView from './App/Views/EditorProfile.view';
 
 const ROUTES = createBrowserRouter([
   {
@@ -24,9 +25,14 @@ const ROUTES = createBrowserRouter([
     element: <EditorsListView />
   },
   {
+    path: '/editores/:id',
+    element: <EditorProfileView />
+  },
+  {
     path: '/posts/criar',
     element: <PostCreateView />
   },
+  
 ]);
 
 const root = ReactDOM.createRoot(

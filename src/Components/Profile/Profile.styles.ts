@@ -1,6 +1,7 @@
 import styled from "styled-components";
+import { Link } from 'react-router-dom';
 
-export const Wrapper = styled.a`
+export const Wrapper = styled(Link)`
   display: flex;
   gap: 24px;
 
