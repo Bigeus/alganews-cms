@@ -1,8 +1,12 @@
 import styled from "styled-components";
 import Profile from "../../Components/Profile/Profile";
+import { User } from "../../@types/User";
+import { Alganews } from "../../@types/Alganews";
 
 export default function EditorsList() {
-    return <EditorsListWrapper>
+  // const editors: User.
+  
+  return <EditorsListWrapper>
         <Profile editorId={1} description="Editor há 10 anos" name="Vinícius Simões"/>
         <Profile editorId={2} description="Editor há 8 anos" name="Bigeus"/>
         <Profile editorId={3} description="Editor há 4 anos" name="João Frango"/>

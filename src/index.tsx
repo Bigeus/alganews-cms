@@ -13,6 +13,7 @@ import EditorsListView from './App/Views/EditorsList.view';
 import PostCreateView from './App/Views/PostCreate.view';
 import NotFound404View from './App/Views/NotFound404.view';
 import EditorProfileView from './App/Views/EditorProfile.view';
+import http from './Core/http';
 
 const ROUTES = createBrowserRouter([
   {
@@ -32,7 +33,7 @@ const ROUTES = createBrowserRouter([
     path: '/posts/criar',
     element: <PostCreateView />
   },
-  
+
 ]);
 
 const root = ReactDOM.createRoot(
@@ -50,7 +51,14 @@ root.render(
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+async function getDataFromApi() {
+  try {
+    const response = await http.get('http://localhost:8080/posts')
+    console.log(response.data)
+  } catch (error) {
+    console.log('Houve erro: ', error)
+  }
+}
+
+getDataFromApi();
+
