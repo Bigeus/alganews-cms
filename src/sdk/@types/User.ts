@@ -2,6 +2,7 @@ import { Alganews } from "./Alganews";
 
 export namespace User {
     export type Input = Alganews.components['schemas']['UserInput']
+    export type IdInput = Alganews.components['schemas']['UserIdInput']
     export type Detailed = Alganews.components['schemas']['UserDetailed']
     export type Summary = Alganews.components['schemas']['UserSummary']
     export type Minimal = Alganews.components['schemas']['UserMinimal']

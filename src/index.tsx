@@ -13,7 +13,6 @@ import EditorsListView from './App/Views/EditorsList.view';
 import PostCreateView from './App/Views/PostCreate.view';
 import NotFound404View from './App/Views/NotFound404.view';
 import EditorProfileView from './App/Views/EditorProfile.view';
-import http from './Core/http';
 
 const ROUTES = createBrowserRouter([
   {
@@ -42,23 +41,12 @@ const root = ReactDOM.createRoot(
 
 
 root.render(
-  <React.StrictMode>
+  //<React.StrictMode>
     <Suspense>
-
       <RouterProvider router={ROUTES} />
       <GlobalStyles />
     </Suspense>
-  </React.StrictMode>
+  //</React.StrictMode>
 );
 
-async function getDataFromApi() {
-  try {
-    const response = await http.get('http://localhost:8080/posts')
-    console.log(response.data)
-  } catch (error) {
-    console.log('Houve erro: ', error)
-  }
-}
-
-getDataFromApi();
-
+reportWebVitals();

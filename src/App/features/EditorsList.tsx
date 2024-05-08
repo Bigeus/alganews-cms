@@ -1,11 +1,17 @@
 import styled from "styled-components";
 import Profile from "../../Components/Profile/Profile";
-import { User } from "../../@types/User";
-import { Alganews } from "../../@types/Alganews";
+import { User } from "../../sdk/@types/User";
+import { Alganews } from "../../sdk/@types/Alganews";
+import { useEffect } from "react";
+import PostService from "../../sdk/Services/Post.service";
 
 export default function EditorsList() {
-  // const editors: User.
-  
+
+    useEffect(()=> {
+        const posts = PostService.getAllPosts() 
+        console.log(posts)
+    },[]);
+
   return <EditorsListWrapper>
         <Profile editorId={1} description="Editor há 10 anos" name="Vinícius Simões"/>
         <Profile editorId={2} description="Editor há 8 anos" name="Bigeus"/>
