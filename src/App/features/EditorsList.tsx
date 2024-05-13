@@ -1,23 +1,32 @@
 import styled from "styled-components";
 import Profile from "../../Components/Profile/Profile";
 import { User } from "../../sdk/@types/User";
-import { Alganews } from "../../sdk/@types/Alganews";
-import { useEffect } from "react";
-import PostService from "../../sdk/Services/Post.service";
+import { useEffect, useState } from "react";
+import UserService from "../../sdk/Services/User.service";
+import getEditorDescription from "../../sdk/Utils/getEditorDescription";
 
 export default function EditorsList() {
 
-    useEffect(()=> {
-        const posts = PostService.getAllPosts() 
-        console.log(posts)
-    },[]);
+    const [editors, setEditors] = useState<User.EditorSummary[]>([])
 
-  return <EditorsListWrapper>
-        <Profile editorId={1} description="Editor há 10 anos" name="Vinícius Simões"/>
-        <Profile editorId={2} description="Editor há 8 anos" name="Bigeus"/>
-        <Profile editorId={3} description="Editor há 4 anos" name="João Frango"/>
-        <Profile editorId={4} description="Editor há 7 meses" name="Kadu Maverick"/>
-        <Profile editorId={5} description="Editor há 15 anos" name="John Smith"/>
+    useEffect(() => {
+        UserService
+            .getAllEditors()
+            .then(setEditors)
+    }, [])
+
+    return <EditorsListWrapper>
+        {
+            editors.map(editor => {
+                return <Profile
+                    editorId={editor.id}
+                    name={editor.name}
+                    description={getEditorDescription(new Date (editor.createdAt))}
+                    avatarUrl={editor.avatarUrls.small}
+                    key={editor.id}
+                />
+            })
+        }
     </EditorsListWrapper>
 }
 

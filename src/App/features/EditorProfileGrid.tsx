@@ -3,58 +3,81 @@ import ProgressBar from "../../Components/ProgressBar/ProgressBar";
 import FieldDescriptor from "../../Components/Typography/FieldDescriptor";
 import ValueDescriptor from "../../Components/ValueDescriptor/ValueDescriptor";
 import { transparentize } from "polished";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import UserService from "../../sdk/Services/User.service";
+import { User } from "../../sdk/@types";
+import getEditorDescription from "../../sdk/Utils/getEditorDescription";
+
 
 interface EditorProfileProps {
-    hidePersonalData?: boolean
+  hidePersonalData?: boolean
 }
 
 export default function EditorProfileGrid(props: EditorProfileProps) {
-  
-//  throw new Error("Houve um erro ao renderizar o componente EditorProfile");
-  
+
+  //  throw new Error("Houve um erro ao renderizar o componente EditorProfile");
+
+  const params = useParams<{ id: string }>();
+  const [editor, setEditor] = useState<User.EditorDetailed>()
+
+
+  useEffect(() => {
+    UserService.getExistingEditor(Number(params.id))
+      .then(setEditor)
+  }, [params.id])
+
+  if(!editor){
+    return null
+  }
+
+
   return <EditorProfileWrapper>
-        <EditorHeadline>
-            <Avatar src={'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YXZhdGFyfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80'} />
-            <Name>Vinícius Simões</Name>
-            <Description>Editor há 5 anos</Description>
-        </EditorHeadline>
+    <EditorHeadline>
+      <Avatar src={ editor.avatarUrls.small } />
+      <Name>{ editor?.name }</Name>
+      <Description>{ getEditorDescription(new Date(editor.createdAt)) }</Description>
+    </EditorHeadline>
 
-        <Divisor />
+    <Divisor />
 
-        <EditorFeatures>
-            <PersonalInfo>
-                <Biography>{'Ana Castillo é especialista em recrutamento de desenvolvedores e ama escrever dicas para ajudar os devs a encontrarem a vaga certa para elas. Atualmente tem uma empresa de Recruitment e é redatora no alga content'}</Biography>
-                <Skills>
-                    <ProgressBar progress={96} title={'JavaScript'} theme={'primary'} />
-                    <ProgressBar progress={86} title={'React'} theme={'primary'} />
-                    <ProgressBar progress={67} title={'Node'} theme={'primary'} />
-                </Skills>
-            </PersonalInfo>
-            <ContactInfo>
-                <FieldDescriptor head={'Cidade'} children={'Vila Velha'} />
-                <FieldDescriptor head={'Estado'} children={'Espírito Santo'} />
-                {
-                    !props.hidePersonalData && <>
-                        <FieldDescriptor head={'Celular'} children={'+55 27 99900-9999'} />
-                        <FieldDescriptor head={'Email'} children={'ana.castillo@redacao.algacontent.com'} />
-                        <FieldDescriptor head={'Nascimento'} children={'26 de Dezembro de 1997 (22 anos)'} />
-                    </>
-                }
-            </ContactInfo>
-        </EditorFeatures>
+    <EditorFeatures>
+      <PersonalInfo>
+        <Biography>{editor.bio}</Biography>
+        <Skills>
+      {
+        editor.skills?.map(skill => {
+          return <ProgressBar progress={skill.percentage} theme={"primary"} title={skill.name}/>
+        })
+      }
 
+        </Skills>
+      </PersonalInfo>
+      <ContactInfo>
+        <FieldDescriptor head={'Cidade'} children={editor.location.city} />
+        <FieldDescriptor head={'Estado'} children={editor.location.state} />
         {
-            !props.hidePersonalData &&
-            <EditorEarnings>
-                <ValueDescriptor color={'default'} value={21452} description={'Palavras nesta semana'} />
-                <ValueDescriptor color={'default'} value={123234} description={'Palavras no mês'} />
-                <ValueDescriptor color={'default'} value={12312312} description={'Total de palavras'} />
-                <ValueDescriptor color={'primary'} value={545623.23} description={'Ganhos na semana'} isCurrency />
-                <ValueDescriptor color={'primary'} value={545623.23} description={'Ganhos no mês'} isCurrency />
-                <ValueDescriptor color={'primary'} value={545623.23} description={'Ganhos no total'} isCurrency />
-            </EditorEarnings>
+          !props.hidePersonalData && <>
+            <FieldDescriptor head={'Celular'} children={'+55 27 99900-9999'} />
+            <FieldDescriptor head={'Email'} children={'ana.castillo@redacao.algacontent.com'} />
+            <FieldDescriptor head={'Nascimento'} children={'26 de Dezembro de 1997 (22 anos)'} />
+          </>
         }
-    </EditorProfileWrapper>
+      </ContactInfo>
+    </EditorFeatures>
+
+    {
+      !props.hidePersonalData &&
+      <EditorEarnings>
+        <ValueDescriptor color={'default'} value={21452} description={'Palavras nesta semana'} />
+        <ValueDescriptor color={'default'} value={123234} description={'Palavras no mês'} />
+        <ValueDescriptor color={'default'} value={12312312} description={'Total de palavras'} />
+        <ValueDescriptor color={'primary'} value={545623.23} description={'Ganhos na semana'} isCurrency />
+        <ValueDescriptor color={'primary'} value={545623.23} description={'Ganhos no mês'} isCurrency />
+        <ValueDescriptor color={'primary'} value={545623.23} description={'Ganhos no total'} isCurrency />
+      </EditorEarnings>
+    }
+  </EditorProfileWrapper>
 }
 
 const EditorProfileWrapper = styled.div`

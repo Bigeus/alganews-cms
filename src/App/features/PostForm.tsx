@@ -19,6 +19,8 @@ export default function PostForm() {
 
     const [title, setTitle] = useState('')
 
+    const [imageUrl, setImageUrl] = useState('')
+
     async function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
 
@@ -26,10 +28,10 @@ export default function PostForm() {
             body,
             title,
             tags: tags.map(tag => tag.text),
-            imageUrl: ''
+            imageUrl,
         }
 
-      const insertedPost = await PostService.insertNewPost(newPost)
+        const insertedPost = await PostService.insertNewPost(newPost)
 
         info({
             title: 'Post salvo com sucesso',
@@ -44,9 +46,14 @@ export default function PostForm() {
             value={title}
             onChange={e => setTitle(e.currentTarget.value)}
         />
-        <ImageUploader label="Thumbnail do post" />
+        <ImageUploader onImageUpload={setImageUrl} label="Thumbnail do post" />
         <MarkdownEditor onChange={setBody} />
-        {/* todo: tagInput */}
+        <TagInput
+            tags={tags}
+            onAdd={tag => setTags([...tags, tag])}
+            onDelete={index => setTags(tags.filter((_, i) => i !== index))}
+            placeholder="Insira as tags deste post"
+        />
         <PostFormSubmitWrapper >
             <WordPriceCounter
                 pricePerWord={0.25}
