@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import './Core/Imports.css';
 import reportWebVitals from './reportWebVitals';
@@ -13,8 +13,9 @@ import EditorsListView from './App/Views/EditorsList.view';
 import PostCreateView from './App/Views/PostCreate.view';
 import NotFound404View from './App/Views/NotFound404.view';
 import EditorProfileView from './App/Views/EditorProfile.view';
+import App from './App';
 
-const ROUTES = createBrowserRouter([
+export const ROUTES = createBrowserRouter([
   {
     path: "/",
     element: <HomeView />,
@@ -40,12 +41,10 @@ const root = ReactDOM.createRoot(
 );
 
 
+
 root.render(
   //<React.StrictMode>
-    <Suspense>
-      <RouterProvider router={ROUTES} />
-      <GlobalStyles />
-    </Suspense>
+   <App />
   //</React.StrictMode>
 );
 

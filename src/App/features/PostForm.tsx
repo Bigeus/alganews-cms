@@ -44,7 +44,13 @@ export default function PostForm() {
                 title: 'Post salvo com sucesso',
                 description: 'Você  acabou de criar o post com o id ' + insertedPost.id
             })
-        } finally {
+        }catch{
+            info({
+                title: 'Erro',
+                description: 'Deu erro'
+            })
+        } 
+        finally {
             setPublishing(false)
         }
 

@@ -4,27 +4,35 @@ import { format, formatDate } from "date-fns/format";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useMemo } from "react";
-import { Column, useTable } from "react-table";
+import { Column, usePagination, useTable } from "react-table";
 import { Post } from "../../sdk/@types";
 import PostService from "../../sdk/Services/Post.service";
 import Table from "../../Components/Table/Table";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import Loading from "../../Components/Loading";
+import styled from "styled-components";
 
 export default function PostList() {
   const [posts, setPosts] = useState<Post.Paginated>();
   const [error, setError] = useState<Error>();
+  const [page, setPage] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     PostService.getAllPosts({
-      page: 0,
-      size: 7,
+      page,
+      size: 3,
       showAll: false,
       sort: ["createdAt", "desc"],
     })
       .then(setPosts)
-      .catch((error) => setError(new Error(error.message)));
-  }, []);
+      .catch((error) => setError(new Error(error.message)))
+      .then(() => {
+        setLoading(false);
+      });
+  }, [page]);
 
   if (error) throw error;
 
@@ -103,24 +111,39 @@ export default function PostList() {
     []
   );
 
-  const instance = useTable<Post.Summary>({
-    data: posts?.content || [],
-    columns,
-  });
+  const instance = useTable<Post.Summary>(
+    {
+      data: posts?.content || [],
+      columns,
+      manualPagination: true,
+      initialState: { pageIndex: 0 },
+      pageCount: posts?.totalPages,
+    },
+    usePagination
+  );
 
-  if (!posts)
+  function SkeletonPostsList() {
+    return <div>
+      <Skeleton height={32} />
+      <Skeleton height={40} />
+      <Skeleton height={40} />
+      <Skeleton height={40} />
+      <Skeleton height={40} />
+      <Skeleton height={40} />
+      <Skeleton height={40} />
+      <Skeleton height={40} />
+    </div>
+  }
+
+  if (!posts || loading)
     return (
-      <div>
-        <Skeleton height={32} />
-        <Skeleton height={40} />
-        <Skeleton height={40} />
-        <Skeleton height={40} />
-        <Skeleton height={40} />
-        <Skeleton height={40} />
-        <Skeleton height={40} />
-        <Skeleton height={40} />
-      </div>
+      <SkeletonPostsList />
     );
-    return <Table instance={instance} />
 
+  return (
+    <>
+      {/* <Loading show={loading} /> */}
+      <Table instance={instance} onPaginate={setPage} />
+    </>
+  );
 }
