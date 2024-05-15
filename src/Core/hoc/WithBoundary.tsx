@@ -1,6 +1,6 @@
 import { transparentize } from "polished";
 import { Component } from "react";
-import ErrorDisplay from "../ErrorDisplay/ErrorDisplay";
+import ErrorDisplay from "../../Components/ErrorDisplay/ErrorDisplay";
 
 interface Props {
   component?: string;

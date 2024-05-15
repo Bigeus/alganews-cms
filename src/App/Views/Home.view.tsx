@@ -1,19 +1,26 @@
-import UsePageTitle from "../../Core/Hooks/UsePageTitle"
-import DefaultLayout from "../Layouts/Default/Default.layout"
-import PostsList from "../features/PostsList.features"
+import usePageTitle from "../../Core/Hooks/UsePageTitle"
+import ErrorBoundary from "../../Components/ErrorBoundary/ErrorBoundary"
+import PostList from "../../App/features/PostsList.features"
 import UserEarnings from "../features/UserEarnings"
 import UserPerformance from "../features/UserPerformance"
 import UserTopTags from "../features/UserTopTags"
-export default function HomeView() {
+import DefaultLayout from "../Layouts/Default/Default.layout"
+import Skeleton from "react-loading-skeleton"
+import Loading from "../../Components/Loading"
 
-  UsePageTitle('Home')
+export default function Home () {
+  usePageTitle('Home')
 
   return <DefaultLayout>
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '35px'}}>
+    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', alignItems: 'center', gap: 32 }}>
       <UserTopTags />
       <UserEarnings />
     </div>
-    <UserPerformance />
-    <PostsList />
+    <ErrorBoundary component={'performance'}>
+      <UserPerformance />
+    </ErrorBoundary>
+    <ErrorBoundary component={'lista de posts'}>
+      <PostList />
+    </ErrorBoundary>
   </DefaultLayout>
 }

@@ -1,11 +1,9 @@
-import { TableInstance } from 'react-table';
-import * as T from './Table.styles';
-import NoData from '../NoData/NoData';
-import { transparentize } from 'polished';
+import { transparentize } from 'polished'
+import { TableInstance } from 'react-table'
+import NoData from '../NoData/NoData'
+import * as T from './Table.styles'
 
-
-export default function Table({ instance }: { instance: TableInstance<any> }) {
-
+export default function Table<T extends Object>({ instance }: { instance: TableInstance<T> }) {
     const {
         getTableProps,
         getTableBodyProps,
@@ -31,9 +29,6 @@ export default function Table({ instance }: { instance: TableInstance<any> }) {
                             </T.HeadingRow>
                         ))
                     }
-                    <tr>
-                        <th></th>
-                    </tr>
                 </T.Heading>
                 <T.Body {...getTableBodyProps()}>
                     {
@@ -47,20 +42,17 @@ export default function Table({ instance }: { instance: TableInstance<any> }) {
                                         </T.BodyCell>
                                     })
                                 }
-
                             </T.BodyRow>
                         })
                     }
                 </T.Body>
             </T.Wrapper>
-
             {
-                !rows.length &&
-                <div style={{ backgroundColor: transparentize(0.95, '#274060')}}>
-                    <NoData height={360}></NoData>
+                !rows.length && <div style={{ backgroundColor: transparentize(0.95, '#274060') }}>
+                    <NoData height={360} />
                 </div>
             }
+
         </>
     )
 }
-

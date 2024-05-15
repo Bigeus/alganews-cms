@@ -1,33 +1,38 @@
-import Chart from "../../Components/Chart/Chart"
+import { useEffect, useState } from "react";
+import transformEditorMonthlyEaningsIntoChartJs from "../../Core/Utils/TransformEditorMonthlyEarningsIntoChartJs";
+import MetricService from "../../sdk/Services/Metrics.service";
+import Chart, { ChartProps } from "../../Components/Chart/Chart";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
-const FAKE_DATA = {
-    labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-  
-    datasets: [
-      {
-        label: 'Receitas',
-        data: [500, 400, 600, 100, 800, 20, 123, 320, 120, 500, 434, 322],
-        fill: true,
-        backgroundColor: '#09f',
-        borderColor: '#09f',
-        borderWidth: 0.5,
-        yAxisId: 'cashflow',
-      },
-      {
-        label: 'Despesas',
-        data: [100, 200, 250, 500, 1000, 600, 123, 210, 344, 800, 123, 0],
-        fill: true,
-        backgroundColor: '#274060',
-        borderColor: '#274060',
-        borderWidth: 0.5,
-        yAxisId: 'cashflow',
-      }
-    ]
+
+function UserPerformance() {
+  const [editorEarnings, setEditorEarings] = useState<ChartProps['data']>()
+  const [error, setError] = useState<Error>()
+
+  useEffect(() => {
+    MetricService
+      .getEditorMonthlyEarnings()
+      .then(transformEditorMonthlyEaningsIntoChartJs)
+      .then(setEditorEarings)
+      .catch(error => {
+        setError(new Error(error.message))
+      })
+  }, [])
+
+  if(error){
+    throw error
   }
-export default function UserPerformance(){
-    
-    return <Chart 
-        title='Média de performance nos últimos 12 meses'
-        data={FAKE_DATA}
-    /> 
+
+  if (!editorEarnings)
+    return <div>
+      <Skeleton height={227} />
+    </div>
+
+  return <Chart
+    title="Média de performance nos últimos 12 meses" 
+    data={editorEarnings || <Skeleton />}
+  />
 }
+
+export default UserPerformance
