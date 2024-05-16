@@ -8,11 +8,24 @@ class PostService extends Service {
     return this.Http
       .get<Post.Paginated>('/posts'.concat(queryString))
       .then(this.getData)
+      .finally(() => {console.log(`/posts${queryString}`)})
+  }
+
+  static getAllPosts2 (){
+    return this.Http
+    .get('/posts')
+    .then(this.getData)
+  }
+
+  static getAllPostsTeste(){
+    return this.Http
+    .get<Post.GetPostsTest>('/posts')
+    .then(this.getData)
   }
 
   static getExistingPost (id: number) {
     return this.Http
-      .get<Post.Paginated>(`/posts/${id}`)
+      .get<Post.Detailed>(`/posts/${id}`)
       .then(this.getData)
   }
 
@@ -20,6 +33,12 @@ class PostService extends Service {
     return this.Http
       .post<Post.Detailed>('/posts', post)
       .then(this.getData)
+  }
+
+  static publishExistingPost(postId: number){
+    return this.Http
+    .put<{}>(`/posts/${postId}/publishing`)
+    .then(this.getData)
   }
 }
 

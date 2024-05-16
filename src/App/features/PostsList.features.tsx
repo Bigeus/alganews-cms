@@ -1,6 +1,6 @@
 import { mdiOpenInNew } from "@mdi/js";
 import Icon from "@mdi/react";
-import { format, formatDate } from "date-fns/format";
+import { format } from "date-fns/format";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useMemo } from "react";
@@ -10,8 +10,10 @@ import PostService from "../../sdk/Services/Post.service";
 import Table from "../../Components/Table/Table";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import Loading from "../../Components/Loading";
-import styled from "styled-components";
+import PostPreview from "./PostPreview";
+import modal from "../../Core/Utils/modal";
+import PostTitleAnchor from "../../Components/PostTitleAnchor";
+
 
 export default function PostList() {
   const [posts, setPosts] = useState<Post.Paginated>();
@@ -22,11 +24,15 @@ export default function PostList() {
   useEffect(() => {
     setLoading(true);
     PostService.getAllPosts({
+
       page,
-      size: 3,
-      showAll: false,
+      size: 7,
+      showAll: true,
       sort: ["createdAt", "desc"],
     })
+
+      // PostService.getAllPosts2()
+
       .then(setPosts)
       .catch((error) => setError(new Error(error.message)))
       .then(() => {
@@ -54,6 +60,10 @@ export default function PostList() {
               display: "flex",
               gap: 8,
               alignItems: "center",
+              maxWidth: '270px',
+              textOverflow: 'ellipsis',
+              overflow: 'hidden',
+              whiteSpace: 'nowrap'
             }}
           >
             <img
@@ -63,7 +73,22 @@ export default function PostList() {
               alt={props.row.original.editor.name}
               title={props.row.original.editor.name}
             />
-            {props.value}
+            <PostTitleAnchor
+              title={props.value}
+              href={`/posts/${props.row.original.id}`}
+              onClick={(e) => {
+                e.preventDefault();
+                modal({
+                  children: <PostPreview
+                    postId={props.row.original.id}
+                    postImageSrc={props.row.original.imageUrls.medium}
+                    postTitle={props.row.original.title}
+                  />,
+                });
+              }}
+            >
+              {props.value}
+            </PostTitleAnchor>
           </div>
         ),
       },

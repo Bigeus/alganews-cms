@@ -7,6 +7,9 @@ export namespace Post {
   export type Paginated = Alganews.components['schemas']['PostsPaginated']
   export type WithEarnings = Alganews.components['schemas']['PostWithEarnings']
 
+
+  export type GetPostsTest = Alganews.operations['getPosts']['parameters']
+
   export type Query = {
     editorId?: number
     page?: number
