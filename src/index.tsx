@@ -14,6 +14,7 @@ import PostCreateView from './App/Views/PostCreate.view';
 import NotFound404View from './App/Views/NotFound404.view';
 import EditorProfileView from './App/Views/EditorProfile.view';
 import App from './App';
+import PostEditView from './App/Views/PostEdit.view';
 
 export const ROUTES = createBrowserRouter([
   {
@@ -33,7 +34,10 @@ export const ROUTES = createBrowserRouter([
     path: '/posts/criar',
     element: <PostCreateView />
   },
-
+  {
+    path: '/posts/editar/:id',
+    element: <PostEditView />
+  },
 ]);
 
 const root = ReactDOM.createRoot(

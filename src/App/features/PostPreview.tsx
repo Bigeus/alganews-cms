@@ -1,88 +1,127 @@
-import styled from "styled-components"
-import MarkdownEditor from "../../Components/MarkdownEditor/MarkdownEditor"
-import Button from "../../Components/Button/Button"
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useState } from "react";
+import styled from "styled-components";
+import withBoundary from "../../Core/hoc/WithBoundary";
 import { Post } from "../../sdk/@types";
 import PostService from "../../sdk/Services/Post.service";
-import Loading from "../../Components/Loading";
+import Button from '../../Components/Button/Button';
+import MarkdownEditor from "../../Components/MarkdownEditor/MarkdownEditor";
+import Loading from '../../Components/Loading';
+import info from '../../Core/Utils/info';
+import confirm from '../../Core/Utils/confirm';
+import modal from "../../Core/Utils/modal";
+import { useNavigate } from "react-router-dom";
+import PostEditView from "../Views/PostEdit.view";
 
-export interface PostPreviewProps {
-    postId: number;
-    postTitle: string;
-    postImageSrc: string;
+interface PostPreviewProps {
+    postId: number
 }
 
-export default function PostPreview(props: PostPreviewProps) {
+function PostPreview(props: PostPreviewProps) {
     const [post, setPost] = useState<Post.Detailed>()
     const [loading, setLoading] = useState(false)
 
+    async function publishPost() {
+        await PostService.publishExistingPost(props.postId)
+        info({
+            title: 'Post publicado',
+            description: 'Você publicou o post com sucesso'
+        })
+    }
+
+    function reopenModal() {
+        modal({
+            children: <PostPreview postId={props.postId} />
+        })
+    }
+
     useEffect(() => {
         setLoading(true)
-
-        PostService.getExistingPost(props.postId)
+        PostService
+            .getExistingPost(props.postId)
             .then(setPost)
             .finally(() => setLoading(false))
     }, [props.postId])
 
-    if (loading) {
-        return <Loading show={true} />
-    }
+    if (loading)
+        return <Loading show />
 
-    if (!post) {
+    if (!post)
         return null
-    }
 
     return <PostPreviewWrapper>
-        <div className="topElements">
-            <TitleContainer >
-                {props.postTitle}
-            </TitleContainer>
-            <div style={{ display: 'flex', flexDirection: "row", gap: '8px' }}>
+        <PostPreviewHeading>
+            <PostPreviewTitle>
+                {post.title}
+            </PostPreviewTitle>
+            <PostPreviewActions>
                 <Button
-                    label={'Publicar'}
                     variant={'danger'}
+                    label={'Publicar'}
                     disabled={post.published}
-                    />
-                <Button
-                    label={'Editar'}
-                    variant={'primary'}
-                    disabled={post.published}
+                    onClick={() => {
+                        confirm({
+                            title: 'Publicar o post?',
+                            onConfirm: publishPost,
+                            onCancel: reopenModal,
+                        })
+                    }}
                 />
-            </div>
-        </div>
-        <ImageWrapper src={props.postImageSrc} />
-        <MarkdownEditor
-            readOnly={true}
-            value={post.body}
+                <Button
+                    variant={'primary'}
+                    label={'Editar'}
+                    disabled={post.published}
+                    onClick={() => window.location.pathname = `/posts/editar/${props.postId}`}
+                />
+            </PostPreviewActions>
+        </PostPreviewHeading>
+        <PostPreviewImage
+            src={post.imageUrls.medium}
         />
+        <PostPreviewContent>
+            <MarkdownEditor
+                readOnly
+                value={post.body}
+            />
+        </PostPreviewContent>
     </PostPreviewWrapper>
 }
 
-const TitleContainer = styled.h2`
-    font-size: 18px;
-    color: #274060;
-    font-weight: bold;
-`
-
 const PostPreviewWrapper = styled.div`
-    display: flex;
-    width: 655px;
-    background-color: #f3f8fa;
-    border: 1px solid #ccc;
-    padding: 24px;
-    flex-direction: column;
-    gap: 24px;
-    overflow-y: scroll;
-    height: 70vh;
-
-    .topElements {
-        display: flex;
-        justify-content: space-between;
-    }
+  background-color: #f3f8fa;
+  padding: 24px;
+  border: 1px solid #ccc;
+  width: 655px;
+  display: flex;
+  gap: 24px;
+  flex-direction: column;
+  max-height: 70vh;
+  overflow-y: auto;
+  box-shadow: 0 6px 6px rgba(0,0,0,.05);
 `
 
-const ImageWrapper = styled.img`
-    transform: translateY(-1);
-    height: 240px;
-    object-fit: cover;
+const PostPreviewHeading = styled.div`
+  display: flex;
+  justify-content: space-between;
 `
+
+const PostPreviewTitle = styled.h2`
+  font-size: 18px;
+  font-weight: 600;
+`
+
+const PostPreviewActions = styled.div`
+  display: flex;
+  gap: 8px;
+`
+
+const PostPreviewImage = styled.img`
+  height: 240px;
+  width: 100%;
+  object-fit: cover;
+`
+
+const PostPreviewContent = styled.div`
+`
+
+export default withBoundary(PostPreview)

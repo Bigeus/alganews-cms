@@ -81,8 +81,6 @@ export default function PostList() {
                 modal({
                   children: <PostPreview
                     postId={props.row.original.id}
-                    postImageSrc={props.row.original.imageUrls.medium}
-                    postTitle={props.row.original.title}
                   />,
                 });
               }}
