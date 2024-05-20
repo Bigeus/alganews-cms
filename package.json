@@ -13,6 +13,7 @@
     "@types/react": "^18.2.75",
     "@types/react-dom": "^18.2.24",
     "axios": "^1.6.8",
+    "bigeus-sdk": "^1.5.0",
     "chart.js": "^4.4.2",
     "date-fns": "^3.6.0",
     "markdown-it": "^14.1.0",
