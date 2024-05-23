@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import transformEditorMonthlyEaningsIntoChartJs from "../../Core/Utils/TransformEditorMonthlyEarningsIntoChartJs";
-import MetricService from "../../sdk/Services/Metrics.service";
 import Chart, { ChartProps } from "../../Components/Chart/Chart";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { MetricsService } from "bigeus-sdk";
 
 
 function UserPerformance() {
@@ -11,7 +11,7 @@ function UserPerformance() {
   const [error, setError] = useState<Error>()
 
   useEffect(() => {
-    MetricService
+    MetricsService
       .getEditorMonthlyEarnings()
       .then(transformEditorMonthlyEaningsIntoChartJs)
       .then(setEditorEarings)

@@ -3,8 +3,8 @@ import * as IU from './ImageUploader.styles';
 import { mdiDelete, mdiUpload } from '@mdi/js';
 import { useState } from 'react';
 import Button from '../Button/Button';
-import FileService from '../../sdk/Services/File.service';
 import Loading from "../../Components/Loading"
+import { FileService } from 'bigeus-sdk';
 
 export interface ImageUploaderProps {
     label: string

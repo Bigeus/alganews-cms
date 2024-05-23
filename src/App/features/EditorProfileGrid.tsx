@@ -5,9 +5,7 @@ import ValueDescriptor from "../../Components/ValueDescriptor/ValueDescriptor";
 import { transparentize } from "polished";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import UserService from "../../sdk/Services/User.service";
-import { User } from "../../sdk/@types";
-import getEditorDescription from "../../sdk/Utils/getEditorDescription";
+import { User, UserService, getEditorDescription } from "bigeus-sdk";
 
 
 interface EditorProfileProps {

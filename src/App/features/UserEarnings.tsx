@@ -1,10 +1,9 @@
 import styled from "styled-components"
 import ValueDescriptor from "../../Components/ValueDescriptor/ValueDescriptor"
 import { useEffect, useState } from "react"
-import UserService from "../../sdk/Services/User.service";
-import { User } from "../../sdk/@types";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { User, UserService } from "bigeus-sdk";
 
 
 export default function UserEarnings(){

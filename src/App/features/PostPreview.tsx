@@ -2,16 +2,13 @@ import { useEffect } from "react";
 import { useState } from "react";
 import styled from "styled-components";
 import withBoundary from "../../Core/hoc/WithBoundary";
-import { Post } from "../../sdk/@types";
-import PostService from "../../sdk/Services/Post.service";
 import Button from '../../Components/Button/Button';
 import MarkdownEditor from "../../Components/MarkdownEditor/MarkdownEditor";
 import Loading from '../../Components/Loading';
 import info from '../../Core/Utils/info';
 import confirm from '../../Core/Utils/confirm';
 import modal from "../../Core/Utils/modal";
-import { useNavigate } from "react-router-dom";
-import PostEditView from "../Views/PostEdit.view";
+import { Post, PostService } from "bigeus-sdk";
 
 interface PostPreviewProps {
     postId: number

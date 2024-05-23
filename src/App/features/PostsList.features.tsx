@@ -5,14 +5,13 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useMemo } from "react";
 import { Column, usePagination, useTable } from "react-table";
-import { Post } from "../../sdk/@types";
-import PostService from "../../sdk/Services/Post.service";
 import Table from "../../Components/Table/Table";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import PostPreview from "./PostPreview";
 import modal from "../../Core/Utils/modal";
 import PostTitleAnchor from "../../Components/PostTitleAnchor";
+import { Post, PostService } from "bigeus-sdk";
 
 
 export default function PostList() {

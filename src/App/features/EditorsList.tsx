@@ -1,11 +1,9 @@
 import styled from "styled-components";
 import Profile from "../../Components/Profile/Profile";
-import { User } from "../../sdk/@types/User";
 import { useEffect, useState } from "react";
-import UserService from "../../sdk/Services/User.service";
-import getEditorDescription from "../../sdk/Utils/getEditorDescription";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { User, UserService, getEditorDescription } from "bigeus-sdk";
 
 
 export default function EditorsList() {

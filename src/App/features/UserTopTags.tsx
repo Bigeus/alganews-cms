@@ -2,15 +2,14 @@ import styled from "styled-components";
 import "react-loading-skeleton/dist/skeleton.css";
 import CircleChart from "../../Components/CircleChart/CircleChart";
 import { useEffect, useState } from "react";
-import { Metric } from "../../sdk/@types";
-import MetricService from "../../sdk/Services/Metrics.service";
 import Skeleton from "react-loading-skeleton";
+import { Metric, MetricsService } from "bigeus-sdk";
 
 export default function UserTopTags() {
   const [topTags, setTopTags] = useState<Metric.EditorTagRatio>([])
 
   useEffect(() => {
-    MetricService
+    MetricsService
       .getTop3Tags()
       .then(setTopTags)
   }, [])

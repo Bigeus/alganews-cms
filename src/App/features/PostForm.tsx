@@ -9,9 +9,9 @@ import WordPriceCounter from "../../Components/WordPriceCounter/WordPriceCounter
 import Button from "../../Components/Button/Button"
 import countWordsInMarkdown from "../../Core/Utils/CountWordsInMarkDown"
 import info from "../../Core/Utils/info"
-import PostService from "../../sdk/Services/Post.service"
 import Loading from "../../Components/Loading"
 import { useNavigate } from "react-router-dom"
+import { PostService } from "bigeus-sdk"
 
 interface PostFormProps {
     postId?: number
