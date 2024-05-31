@@ -1,35 +1,34 @@
 import styled from "styled-components";
 import Profile from "../../Components/Profile/Profile";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { User, UserService, getEditorDescription } from "bigeus-sdk";
+import { getEditorDescription, } from "bigeus-sdk";
+import useEditors from "../../Core/Hooks/useEditors";
 
 
 export default function EditorsList() {
+    const { editorsList, loading, fetchAllEditors } = useEditors();
 
-    const [editors, setEditors] = useState<User.EditorSummary[]>([])
 
     useEffect(() => {
-        UserService
-            .getAllEditors()
-            .then(setEditors)
-    }, [])
+        fetchAllEditors()
+    }, [fetchAllEditors])
 
-    if (!editors.length) {
+    if (!editorsList.length) {
         return <EditorsListWrapper>
-            <Skeleton height={81}/>
-            <Skeleton height={81}/>
-            <Skeleton height={81}/>
-            <Skeleton height={81}/>
-            <Skeleton height={81}/>
-            <Skeleton height={81}/>
+            <Skeleton height={81} />
+            <Skeleton height={81} />
+            <Skeleton height={81} />
+            <Skeleton height={81} />
+            <Skeleton height={81} />
+            <Skeleton height={81} />
         </EditorsListWrapper>
     }
 
     return <EditorsListWrapper>
         {
-            editors.map(editor => {
+            editorsList.map(editor => {
                 return <Profile
                     editorId={editor.id}
                     name={editor.name}

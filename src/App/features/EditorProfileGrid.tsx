@@ -4,8 +4,9 @@ import FieldDescriptor from "../../Components/Typography/FieldDescriptor";
 import ValueDescriptor from "../../Components/ValueDescriptor/ValueDescriptor";
 import { transparentize } from "polished";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { User, UserService, getEditorDescription } from "bigeus-sdk";
+import { useEffect } from "react";
+import useSingleEditor from "../../Core/Hooks/useSingleEditor";
+import { getEditorDescription } from "bigeus-sdk";
 
 
 interface EditorProfileProps {
@@ -17,24 +18,23 @@ export default function EditorProfileGrid(props: EditorProfileProps) {
   //  throw new Error("Houve um erro ao renderizar o componente EditorProfile");
 
   const params = useParams<{ id: string }>();
-  const [editor, setEditor] = useState<User.EditorDetailed>()
+  const { editor, fetchEditor } = useSingleEditor();
 
 
   useEffect(() => {
-    UserService.getExistingEditor(Number(params.id))
-      .then(setEditor)
+    fetchEditor(Number(params.id))
   }, [params.id])
 
-  if(!editor){
+  if (!editor) {
     return null
   }
 
 
   return <EditorProfileWrapper>
     <EditorHeadline>
-      <Avatar src={ editor.avatarUrls.small } />
-      <Name>{ editor?.name }</Name>
-      <Description>{ getEditorDescription(new Date(editor.createdAt)) }</Description>
+      <Avatar src={editor.avatarUrls.small} />
+      <Name>{editor?.name}</Name>
+      <Description>{getEditorDescription(new Date(editor.createdAt))}</Description>
     </EditorHeadline>
 
     <Divisor />
@@ -43,11 +43,11 @@ export default function EditorProfileGrid(props: EditorProfileProps) {
       <PersonalInfo>
         <Biography>{editor.bio}</Biography>
         <Skills>
-      {
-        editor.skills?.map(skill => {
-          return <ProgressBar progress={skill.percentage} theme={"primary"} title={skill.name}/>
-        })
-      }
+          {
+            editor.skills?.map(skill => {
+              return <ProgressBar progress={skill.percentage} theme={"primary"} title={skill.name} />
+            })
+          }
 
         </Skills>
       </PersonalInfo>

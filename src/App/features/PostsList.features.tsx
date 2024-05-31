@@ -11,35 +11,22 @@ import "react-loading-skeleton/dist/skeleton.css";
 import PostPreview from "./PostPreview";
 import modal from "../../Core/Utils/modal";
 import PostTitleAnchor from "../../Components/PostTitleAnchor";
-import { Post, PostService } from "bigeus-sdk";
+import { Post } from "bigeus-sdk";
+import usePosts from "../../Core/Hooks/usePosts";
 
 
 export default function PostList() {
-  const [posts, setPosts] = useState<Post.Paginated>();
-  const [error, setError] = useState<Error>();
+  const { loading, paginatedPosts, fetchPosts } = usePosts();
   const [page, setPage] = useState(0);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
-    PostService.getAllPosts({
-
+    fetchPosts({
       page,
       size: 7,
       showAll: true,
       sort: ["createdAt", "desc"],
-    })
-
-      // PostService.getAllPosts2()
-
-      .then(setPosts)
-      .catch((error) => setError(new Error(error.message)))
-      .then(() => {
-        setLoading(false);
-      });
-  }, [page]);
-
-  if (error) throw error;
+    });
+  }, [fetchPosts, page]);
 
   const columns = useMemo<Column<Post.Summary>[]>(
     () => [
@@ -59,10 +46,7 @@ export default function PostList() {
               display: "flex",
               gap: 8,
               alignItems: "center",
-              maxWidth: '270px',
-              textOverflow: 'ellipsis',
-              overflow: 'hidden',
-              whiteSpace: 'nowrap'
+              maxWidth: 270,
             }}
           >
             <img
@@ -78,9 +62,7 @@ export default function PostList() {
               onClick={(e) => {
                 e.preventDefault();
                 modal({
-                  children: <PostPreview
-                    postId={props.row.original.id}
-                  />,
+                  children: <PostPreview postId={props.row.original.id} />,
                 });
               }}
             >
@@ -135,11 +117,11 @@ export default function PostList() {
 
   const instance = useTable<Post.Summary>(
     {
-      data: posts?.content || [],
+      data: paginatedPosts?.content || [],
       columns,
       manualPagination: true,
       initialState: { pageIndex: 0 },
-      pageCount: posts?.totalPages,
+      pageCount: paginatedPosts?.totalPages,
     },
     usePagination
   );
@@ -157,7 +139,7 @@ export default function PostList() {
     </div>
   }
 
-  if (!posts || loading)
+  if (!paginatedPosts)
     return (
       <SkeletonPostsList />
     );

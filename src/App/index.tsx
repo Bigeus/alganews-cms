@@ -9,7 +9,7 @@ export default function App() {
 
     useEffect(() => {
 
-        
+
         window.onunhandledrejection = function () {
             info({ description: 'Deu erro', title: 'Erro' })
         }

@@ -1,21 +1,19 @@
 import { useEffect } from "react";
-import { useState } from "react";
 import styled from "styled-components";
 import withBoundary from "../../Core/hoc/WithBoundary";
 import Button from '../../Components/Button/Button';
 import MarkdownEditor from "../../Components/MarkdownEditor/MarkdownEditor";
 import Loading from '../../Components/Loading';
-import info from '../../Core/Utils/info';
 import confirm from '../../Core/Utils/confirm';
 import modal from "../../Core/Utils/modal";
-import { Post, PostService } from "bigeus-sdk";
+import useSinglePost from "../../Core/Hooks/useSinglePost";
 
 interface PostPreviewProps {
     postId: number
 }
 
 function PostPreview(props: PostPreviewProps) {
-    const [post, setPost] = useState<Post.Detailed>()
+    /* const [post, setPost] = useState<Post.Detailed>()
     const [loading, setLoading] = useState(false)
 
     async function publishPost() {
@@ -24,7 +22,9 @@ function PostPreview(props: PostPreviewProps) {
             title: 'Post publicado',
             description: 'Você publicou o post com sucesso'
         })
-    }
+    } */
+
+    const { post, loading, publishPost, fetchPost } = useSinglePost();
 
     function reopenModal() {
         modal({
@@ -33,12 +33,16 @@ function PostPreview(props: PostPreviewProps) {
     }
 
     useEffect(() => {
-        setLoading(true)
-        PostService
-            .getExistingPost(props.postId)
-            .then(setPost)
-            .finally(() => setLoading(false))
-    }, [props.postId])
+        fetchPost(props.postId)
+    }, [fetchPost])
+
+    /*  useEffect(() => {
+         setLoading(true)
+         PostService
+             .getExistingPost(props.postId)
+             .then(setPost)
+             .finally(() => setLoading(false))
+     }, [props.postId]) */
 
     if (loading)
         return <Loading show />
@@ -59,7 +63,7 @@ function PostPreview(props: PostPreviewProps) {
                     onClick={() => {
                         confirm({
                             title: 'Publicar o post?',
-                            onConfirm: publishPost,
+                            onConfirm: () => publishPost(props.postId),
                             onCancel: reopenModal,
                         })
                     }}

@@ -104,8 +104,15 @@ export default function PostForm(props: PostFormProps) {
             value={title}
             onChange={e => setTitle(e.currentTarget.value)}
         />
-        <ImageUploader onImageUpload={setImageUrl} label="Thumbnail do post" />
-        <MarkdownEditor onChange={setBody} />
+        <ImageUploader 
+        onImageUpload={setImageUrl} 
+        label="Thumbnail do post"
+        preview={imageUrl}
+        />
+        <MarkdownEditor 
+        onChange={setBody} 
+        value={body}
+        />
         <TagInput
             tags={tags}
             onAdd={tag => setTags([...tags, tag])}

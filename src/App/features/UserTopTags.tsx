@@ -1,18 +1,24 @@
 import styled from "styled-components";
 import "react-loading-skeleton/dist/skeleton.css";
 import CircleChart from "../../Components/CircleChart/CircleChart";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Skeleton from "react-loading-skeleton";
-import { Metric, MetricsService } from "bigeus-sdk";
+import useTopTags from "../../Core/Hooks/useTopTags";
 
 export default function UserTopTags() {
-  const [topTags, setTopTags] = useState<Metric.EditorTagRatio>([])
+ /*  const [topTags, setTopTags] = useState<Metric.EditorTagRatio>([])
 
   useEffect(() => {
     MetricsService
       .getTop3Tags()
       .then(setTopTags)
-  }, [])
+  }, []) */
+
+  const { topTags, fetchTopTags } = useTopTags();
+
+  useEffect(() => {
+    fetchTopTags();
+  }, [fetchTopTags])
 
   if (!topTags.length)
     return (

@@ -1,7 +1,7 @@
 import Icon from '@mdi/react';
 import * as IU from './ImageUploader.styles';
 import { mdiDelete, mdiUpload } from '@mdi/js';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '../Button/Button';
 import Loading from "../../Components/Loading"
 import { FileService } from 'bigeus-sdk';
@@ -9,11 +9,12 @@ import { FileService } from 'bigeus-sdk';
 export interface ImageUploaderProps {
     label: string
     onImageUpload: (imageUrl: string) => any
+    preview?:string
 }
 
 export default function ImageUploader(props: ImageUploaderProps) {
 
-    const [filePreview, setFilePreview] = useState<string | null>(null)
+    const [filePreview, setFilePreview] = useState<string | undefined>(undefined)
 
     const [pushing, setPushing] = useState(false)
 
@@ -41,6 +42,10 @@ export default function ImageUploader(props: ImageUploaderProps) {
     }
 
 
+    useEffect(() => {
+        setFilePreview(props.preview)
+    }, [props.preview])
+
 
 if (filePreview) {
     return <IU.ImagePreviewWrapper>
@@ -52,7 +57,7 @@ if (filePreview) {
                 label={<IU.ContentLabel>Remover Imagem<Icon style={{ paddingLeft: '5px', alignContent: 'center' }}
                     size={1.2}
                     path={mdiDelete} /></IU.ContentLabel>}
-                onClick={() => setFilePreview(null)}>
+                onClick={() => setFilePreview(undefined)}>
                 <Icon path={mdiDelete} size={'10px'} />
             </Button>
 
