@@ -1,36 +1,37 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const Wrapper = styled.div`
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    gap: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    border: 1px solid #c4c4c4;
-    color: #274060;
+  flex-direction: column;
+  gap: 18px;
+
+  border: 1px solid #ccc;
+  padding: 24px;
+
+  color: #274060;
 `
-export const Image = styled.img`
-    height: 47px;
-    width: 47px;
+
+export const Avatar = styled.img`
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
 `
 
 export const Name = styled.h2`
-    width: 100%;
-    font-size: 18px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
+  width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 
-    text-align: center;
+  text-align: center;
+
+  font-size: 18px;
+  font-weight: 600;
 `
 
 export const Description = styled.span`
-    font-size: 12px;
+  font-size: 12px;
 `
-
-
-
-
-

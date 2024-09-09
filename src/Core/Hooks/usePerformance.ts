@@ -1,14 +1,13 @@
-
+import { MetricService } from "danielbonifacio-sdk";
 import { useCallback, useState } from "react";
 import { ChartProps } from "../../Components/Chart/Chart";
 import transformEditorMonthlyEaningsIntoChartJs from "../Utils/TransformEditorMonthlyEarningsIntoChartJs";
-import { MetricsService } from "bigeus-sdk";
 
 export default function usePerformance() {
   const [performance, setPerformance] = useState<ChartProps["data"]>();
 
   const fetchPerformance = useCallback(() => {
-    MetricsService.getEditorMonthlyEarnings()
+    MetricService.getEditorMonthlyEarnings()
       .then(transformEditorMonthlyEaningsIntoChartJs)
       .then(setPerformance);
   }, []);

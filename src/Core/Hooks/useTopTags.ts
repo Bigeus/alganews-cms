@@ -1,15 +1,15 @@
 import { useCallback, useState } from "react";
-import { Metric, MetricsService, } from "bigeus-sdk";
+import { Metric, MetricService } from "danielbonifacio-sdk";
 
 export default function useTopTags() {
-    const [topTags, setTopTags] = useState<Metric.EditorTagRatio>([]);
+  const [topTags, setTopTags] = useState<Metric.EditorTagRatio>([]);
 
-    const fetchTopTags = useCallback(async function () {
-        MetricsService.getTop3Tags().then(setTopTags);
-    }, []);
+  const fetchTopTags = useCallback(async function () {
+    MetricService.getTop3Tags().then(setTopTags);
+  }, []);
 
-    return {
-        topTags,
-        fetchTopTags,
-    };
+  return {
+    topTags,
+    fetchTopTags,
+  };
 }

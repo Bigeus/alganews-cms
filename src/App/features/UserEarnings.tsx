@@ -3,17 +3,11 @@ import ValueDescriptor from "../../Components/ValueDescriptor/ValueDescriptor"
 import { useEffect, useState } from "react"
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { User, UserService } from "bigeus-sdk";
+import { User, UserService } from "danielbonifacio-sdk";
 import useUser from "../../Core/Hooks/useUser";
 
 
 export default function UserEarnings() {
-    /* const [user, setUser] = useState<User.Detailed>(); */
-
-    /* useEffect(() => {
-        UserService.getDetailedUser(7)                    //id do editor carlos lima, built in
-            .then(setUser)
-    }, []) */
 
     const { user, fetchUser } = useUser();
 

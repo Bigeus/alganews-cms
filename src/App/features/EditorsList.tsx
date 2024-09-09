@@ -3,7 +3,7 @@ import Profile from "../../Components/Profile/Profile";
 import { useEffect } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { getEditorDescription, } from "bigeus-sdk";
+import { getEditorDescription, } from "danielbonifacio-sdk";
 import useEditors from "../../Core/Hooks/useEditors";
 
 

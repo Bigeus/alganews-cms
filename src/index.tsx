@@ -1,55 +1,27 @@
-import ReactDOM from 'react-dom/client';
-import './Core/Imports.css';
-import reportWebVitals from './reportWebVitals';
-import {
-  createBrowserRouter,
-} from "react-router-dom";
-import HomeView from './App/Views/Home.view';
-import EditorsListView from './App/Views/EditorsList.view';
-import PostCreateView from './App/Views/PostCreate.view';
-import NotFound404View from './App/Views/NotFound404.view';
-import EditorProfileView from './App/Views/EditorProfile.view';
-import App from './App';
-import PostEditView from './App/Views/PostEdit.view';
-import { Provider } from 'react-redux';
-import store from './Core/store';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./Core/imports.css";
+import reportWebVitals from "./reportWebVitals";
+import { Provider } from "react-redux";
+import "./auth/httpConfig";
+import { BrowserRouter } from "react-router-dom";
+import store from "./Core/store";
+import App from "./App";
+import GlobalStyles from "./Core/GlobalStyles";
 
-export const ROUTES = createBrowserRouter([
-  {
-    path: "/",
-    element: <HomeView />,
-    errorElement: <NotFound404View />,
-  },
-  {
-    path: '/editores',
-    element: <EditorsListView />
-  },
-  {
-    path: '/editores/:id',
-    element: <EditorProfileView />
-  },
-  {
-    path: '/posts/criar',
-    element: <PostCreateView />
-  },
-  {
-    path: '/posts/editar/:id',
-    element: <PostEditView />
-  },
-]);
-
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+ReactDOM.render(
+  <React.StrictMode>
+    <Provider store={store}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>
+    <GlobalStyles />
+  </React.StrictMode>,
+  document.getElementById("root")
 );
 
-
-
-root.render(
-  //<React.StrictMode>
-  <Provider store={store}>
-    <App />
-  </Provider>
-  //</React.StrictMode>
-);
-
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

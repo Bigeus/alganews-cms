@@ -1,4 +1,4 @@
-import { Post } from "bigeus-sdk";
+import { Post } from "danielbonifacio-sdk";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import selectPaginatedPosts from "../selectors/selectPaginatedPosts";
@@ -7,21 +7,21 @@ import * as PostActions from "../store/Post.slice";
 import { AppDispatch } from "../store";
 
 export default function usePosts() {
-    const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch<AppDispatch>();
 
-    const paginatedPosts = useSelector(selectPaginatedPosts);
-    const loading = useSelector(selectPostsFetching);
+  const paginatedPosts = useSelector(selectPaginatedPosts);
+  const loading = useSelector(selectPostsFetching);
 
-    const fetchPosts = useCallback(
-        async function (query: Post.Query) {
-            dispatch(PostActions.fetchPosts(query));
-        },
-        [dispatch]
-    );
+  const fetchPosts = useCallback(
+    async function (query: Post.Query) {
+      dispatch(PostActions.fetchPosts(query));
+    },
+    [dispatch]
+  );
 
-    return {
-        paginatedPosts,
-        loading,
-        fetchPosts,
-    };
+  return {
+    paginatedPosts,
+    loading,
+    fetchPosts,
+  };
 }

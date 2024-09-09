@@ -2,7 +2,7 @@ import { ChartProps } from "../../Components/Chart/Chart";
 import format, { formatDate } from "date-fns/format";
 import parseISO from "date-fns/parseISO";
 import { ptBR } from "date-fns/locale";
-import { Metric } from "bigeus-sdk/dist/@types";
+import { Metric } from "danielbonifacio-sdk";
 
 function transformEditorMonthlyEaningsIntoChartJs(
     editorEarnings: Metric.EditorMonthlyEarnings

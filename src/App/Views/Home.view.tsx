@@ -3,8 +3,8 @@ import ErrorBoundary from "../../Components/ErrorBoundary/ErrorBoundary";
 import PostList from "../../App/features/PostsList.features";
 import UserEarnings from "../features/UserEarnings";
 import UserPerformance from "../features/UserPerformance";
-import UserTopTags from "../features/UserTopTags";
 import DefaultLayout from "../Layouts/Default/Default.layout";
+import UserTopTags from "../features/UserTopTags";
 
 export default function Home() {
   usePageTitle('Home');

@@ -11,7 +11,7 @@ import countWordsInMarkdown from "../../Core/Utils/CountWordsInMarkDown"
 import info from "../../Core/Utils/info"
 import Loading from "../../Components/Loading"
 import { useNavigate } from "react-router-dom"
-import { PostService } from "bigeus-sdk"
+import { PostService } from "danielbonifacio-sdk"
 
 interface PostFormProps {
     postId?: number

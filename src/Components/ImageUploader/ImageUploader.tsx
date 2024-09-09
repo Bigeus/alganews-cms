@@ -4,7 +4,7 @@ import { mdiDelete, mdiUpload } from '@mdi/js';
 import { useEffect, useState } from 'react';
 import Button from '../Button/Button';
 import Loading from "../../Components/Loading"
-import { FileService } from 'bigeus-sdk';
+import { FileService } from 'danielbonifacio-sdk';
 
 export interface ImageUploaderProps {
     label: string

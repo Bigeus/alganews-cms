@@ -1,15 +1,15 @@
 import ErrorBoundary from "../../Components/ErrorBoundary/ErrorBoundary";
+import EditorProfile from "../features/EditorProfileGrid";
 import DefaultLayout from "../Layouts/Default/Default.layout";
-import EditorProfileGrid from "../features/EditorProfileGrid";
-interface EditorProfileProps {
-    hidePersonalData?: boolean
+
+function EditorProfileView() {
+  return (
+    <DefaultLayout>
+      <ErrorBoundary>
+        <EditorProfile />
+      </ErrorBoundary>
+    </DefaultLayout>
+  );
 }
 
-export default function EditorProfileView(props: EditorProfileProps) {
-   
-    return <DefaultLayout>
-        <ErrorBoundary>
-            <EditorProfileGrid hidePersonalData={true} />
-        </ErrorBoundary>
-    </DefaultLayout>
-}
+export default EditorProfileView;
